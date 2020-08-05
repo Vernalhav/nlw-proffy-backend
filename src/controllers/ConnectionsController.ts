@@ -12,14 +12,11 @@ export default class ClassesController {
     
     async create(request: Request, response: Response) {
         const {user_id} = request.body;
-        
-        const transaction = await db.transaction();
-        
-        await transaction('connections').insert({
+                
+        await db('connections').insert({
             user_id: Number(user_id)
         });
 
-        await transaction.commit();
-        return response.status(201);
+        return response.status(201).send();
     }
 }
