@@ -1,11 +1,8 @@
 import express from 'express';
+import routes from './routes';
 
 const app = express();
 app.use(express.json());
-
-app.post('/', (request, response) => {
-    console.log(request.body);
-    return response.json({status: "OK"}); 
-});
+app.use(routes);
 
 app.listen(3333);
