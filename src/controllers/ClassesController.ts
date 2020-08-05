@@ -26,11 +26,17 @@ export default class ClassesController {
         const timeInMinutes = convertHourToMinutes(filters.time as string);
 
         const classes = await db('classes')
+            .whereExists(function() {
+                this.select('class_schedule.*')
+                    .from('class_schedule')
+                    .whereRaw('`class_schedule`.`class_id` = `classes`.`id`')
+                    .whereRaw('`class_schedule`.`week_day` = ??', [Number(week_day)])
+                    .whereRaw('`class_schedule`.`from` <= ??', [timeInMinutes])
+                    .whereRaw('`class_schedule`.`to` > ??', [timeInMinutes])
+            })
             .where('classes.subject', '=', subject)
             .join('users', 'users.id', '=', 'classes.user_id')
-            .select(['classes.*', 'users.*'])
-            .join('class_schedule', 'class_id', '=', 'classes.id')
-            .where('class_schedule.week_day', '=', week_day);
+            .select(['classes.*', 'users.*']);
 
         return response.json(classes);
     }
