@@ -2,6 +2,7 @@
 Proffy is a simple website made during Rocketseat's Next Level Week advanced module.
 It is a platform for teachers and students to connect and arrange classes of different subjects.  
 This repository contains the website's back-end, providing a RESTful API for a few database communication functions.
+The front-end of the website can be found [here](https://github.com/Vernalhav/nlw-proffy/).
 
 # API  
  This API provides only 4 functionalities, as follows:  
